@@ -46,8 +46,8 @@ publishing {
                 uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             }
             credentials {
-                username = requireNotNull(properties["ossrhUsername"]).toString()
-                password = requireNotNull(properties["ossrhPassword"]).toString()
+                properties["ossrhUsername"]?.also { username = it.toString() }
+                properties["ossrhPassword"]?.also { password = it.toString() }
             }
         }
 
