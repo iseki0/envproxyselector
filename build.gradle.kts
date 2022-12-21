@@ -15,7 +15,7 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-val javaLanguageVersion = JavaLanguageVersion.of(18)
+val javaLanguageVersion = JavaLanguageVersion.of(8)
 val toolchain18Launcher = javaToolchains.launcherFor { languageVersion.set(javaLanguageVersion) }
 
 allprojects {
