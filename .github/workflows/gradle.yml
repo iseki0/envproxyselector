@@ -33,8 +33,3 @@ jobs:
         with:
           gradle-version: wrapper
           arguments: build
-      - name: Check
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: wrapper
-          arguments: check
