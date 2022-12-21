@@ -4,6 +4,8 @@ plugins {
     kotlin("jvm") version "1.7.20"
     idea
     `maven-publish`
+    `java-library`
+    signing
 }
 
 group = "space.iseki.envproxyselector"
@@ -28,9 +30,34 @@ allprojects {
     }
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
+    repositories {
+        maven {
+            url = if (version.toString().endsWith("SNAPSHOT")) {
+                // uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+                uri("https://oss.sonatype.org/content/repositories/snapshots")
+            } else {
+                // uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            }
+            credentials {
+                username = requireNotNull(properties["ossrhUsername"]).toString()
+                password = requireNotNull(properties["ossrhPassword"]).toString()
+            }
+        }
+
+    }
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
             pom {
                 name.set("Proxy env selector")
                 description.set("A proxy selector that read proxy info from environment")
@@ -56,3 +83,11 @@ publishing {
         }
     }
 }
+
+signing {
+    // To use local gpg command, configure gpg options in ~/.gradle/gradle.properties
+    // reference: https://docs.gradle.org/current/userguide/signing_plugin.html#example_configure_the_gnupgsignatory
+    useGpgCmd()
+    sign(publishing.publications["mavenJava"])
+}
+
