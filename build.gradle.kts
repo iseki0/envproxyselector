@@ -15,12 +15,19 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+val javaLanguageVersion = JavaLanguageVersion.of(18)
+val toolchain18Launcher = javaToolchains.launcherFor { languageVersion.set(javaLanguageVersion) }
+
 allprojects {
     repositories {
         mavenCentral()
     }
+    tasks.withType<JavaCompile>().configureEach {
+        javaCompiler.set(javaToolchains.compilerFor { languageVersion.set(javaLanguageVersion) })
+    }
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinJavaToolchain.toolchain.use(toolchain18Launcher)
     }
     tasks.withType<Test> {
         useJUnitPlatform()
