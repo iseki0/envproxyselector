@@ -9,7 +9,6 @@ plugins {
 }
 
 group = "space.iseki.envproxyselector"
-version = "0.1.0-SNAPSHOT"
 
 dependencies {
     testImplementation(kotlin("test"))
@@ -49,12 +48,12 @@ java {
 publishing {
     repositories {
         maven {
-            url = if (version.toString().endsWith("SNAPSHOT")) {
+            if (version.toString().endsWith("SNAPSHOT")) {
                 // uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
-                uri("https://oss.sonatype.org/content/repositories/snapshots")
+                url = uri("https://oss.sonatype.org/content/repositories/snapshots")
             } else {
                 // uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
-                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             }
             credentials {
                 properties["ossrhUsername"]?.also { username = it.toString() }
