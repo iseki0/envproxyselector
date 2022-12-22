@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "space.iseki.envproxyselector"
-version = "1.0-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 
 dependencies {
     testImplementation(kotlin("test"))
