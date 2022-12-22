@@ -7,5 +7,5 @@ data class HostPortRule(val host: String, val port: Int) : NoProxyRule {
     }
 
     override fun of(host: String, port: Int): Boolean =
-        host == this.host && (this.port == 0 || this.port == port)
+        host.endsWith(this.host.removePrefix("*")) && (this.port == 0 || this.port == port)
 }
