@@ -35,6 +35,10 @@ allprojects {
             events("passed", "skipped", "failed")
         }
     }
+    tasks.withType<AbstractArchiveTask>().configureEach {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
 }
 
 java {
