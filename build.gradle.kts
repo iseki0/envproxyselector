@@ -75,6 +75,7 @@ publishing {
                 licenses {
                     license {
                         name.set("MIT")
+                        url.set("https://github.com/iseki0/envproxyselector/raw/master/LICENSE")
                     }
                 }
                 developers {
