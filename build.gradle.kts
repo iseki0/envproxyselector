@@ -8,25 +8,36 @@ plugins {
     signing
 }
 
-group = "space.iseki.envproxyselector"
+java{
+    registerFeature("okhttpSupport"){
+        usingSourceSet(sourceSets["main"])
+        withSourcesJar()
+        withJavadocJar()
+    }
+}
 
 dependencies {
     testImplementation(kotlin("test"))
+    "okhttpSupportImplementation"("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
-val javaLanguageVersion = JavaLanguageVersion.of(8)
-val toolchain18Launcher = javaToolchains.launcherFor { languageVersion.set(javaLanguageVersion) }
+fun JavaToolchainSpec.configure() {
+    languageVersion.set(JavaLanguageVersion.of(17))
+    vendor.set(JvmVendorSpec.GRAAL_VM)
+}
 
 allprojects {
+    group = "space.iseki.envproxyselector"
+
     repositories {
         mavenCentral()
     }
     tasks.withType<JavaCompile>().configureEach {
-        javaCompiler.set(javaToolchains.compilerFor { languageVersion.set(javaLanguageVersion) })
+        javaCompiler.set(javaToolchains.compilerFor { configure() })
     }
     tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-        kotlinJavaToolchain.toolchain.use(toolchain18Launcher)
+        kotlinOptions.jvmTarget = "17"
+        kotlinJavaToolchain.toolchain.use(javaToolchains.launcherFor { configure() })
     }
     tasks.withType<Test> {
         useJUnitPlatform()
