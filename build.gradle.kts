@@ -8,6 +8,11 @@ plugins {
     signing
 }
 
+buildScan{
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+}
+
 java{
     registerFeature("okhttpSupport"){
         usingSourceSet(sourceSets["main"])
