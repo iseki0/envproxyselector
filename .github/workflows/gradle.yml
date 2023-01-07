@@ -32,4 +32,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: wrapper
-          arguments: build
+          arguments: |
+            build
+            --scan

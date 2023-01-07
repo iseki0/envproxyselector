@@ -14,6 +14,10 @@ java{
         withSourcesJar()
         withJavadocJar()
     }
+    toolchain {
+        implementation.set(JvmImplementation.VENDOR_SPECIFIC)
+    }
+
 }
 
 dependencies {
